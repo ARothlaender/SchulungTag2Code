@@ -16,23 +16,25 @@ namespace DYEProjekt
         private void run()
         {
             Schwein piggy = new Schwein("Miss Piggy");
-            /*
-            piggy.AddPigTooFatListener(metzger.schlachten);
-            piggy.AddPigTooFatListener(spediteur.fahren);
-            */
-
-            //piggy.PigTooFatEvent += metzger.schlachten;
+        
             piggy.PigTooFatEvent += spediteur.fahren;
             piggy.PigTooFatEvent += Piggy_PigTooFatEvent;
+            piggy.PropertyChangedEvent += Piggy_PropertyChangedEvent;
 
-            //piggy.AnyEvent += Piggy_AnyEvent;
+           
 
             for (int i = 0; i < 10; i++)
             {
                 piggy.Fressen();
             }
 
-            Console.WriteLine("Hello World!");
+           
+        }
+
+        private void Piggy_PropertyChangedEvent(object sender, Common.PropertyChangedEventArgs e)
+        {
+            //unsauber
+            Console.WriteLine(e); 
         }
 
         private void Piggy_AnyEvent(object sender, EventArgs e)

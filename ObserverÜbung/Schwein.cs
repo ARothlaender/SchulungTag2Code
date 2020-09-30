@@ -1,4 +1,5 @@
-﻿using DYEProjekt;
+﻿using Common;
+using DYEProjekt;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,17 +13,27 @@ namespace Tiere
        
         
         public event SchweinHandler PigTooFatEvent;
-        //public event EventHandler AnyEvent;
-
-        public string Name { get; set; }
+        public event EventHandler<PropertyChangedEventArgs> PropertyChangedEvent;
+        private String name;
+        public string Name
+        {
+            get => name;
+            set
+            {
+                PropertyChangedEventArgs args = new PropertyChangedEventArgs("Name", Name, value);
+                name = value;
+                PropertyChangedEvent?.Invoke(this,args);
+            }
+        }
 
         private int gewicht;
         public int Gewicht
         {
             get => gewicht;
-            set { gewicht = value;
-                //AnyEvent?.Invoke(this, new EventArgs());
+            set {
+                PropertyChangedEventArgs args = new PropertyChangedEventArgs("Gewicht", Gewicht, gewicht = value);
                 if (gewicht >= 20) PigTooFatEvent?.Invoke(this);
+                PropertyChangedEvent?.Invoke(this, args);
             }
         }
 
